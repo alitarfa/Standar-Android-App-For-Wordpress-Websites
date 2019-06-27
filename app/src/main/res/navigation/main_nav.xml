@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav"
+    app:startDestination="@id/home">
+
+    <fragment
+        android:id="@+id/home"
+        android:name="com.add.wordpressdroid.ui.home.Home"
+        android:label="home_fragment"
+        tools:layout="@layout/home_fragment" />
+    <fragment
+        android:id="@+id/bookmarks"
+        android:name="com.add.wordpressdroid.ui.bookmarks.BookmarksFragment"
+        android:label="bookmarks_fragment"
+        tools:layout="@layout/bookmarks_fragment" />
+    <fragment
+        android:id="@+id/category"
+        android:name="com.add.wordpressdroid.ui.category.CategoryFragment"
+        android:label="category_fragment"
+        tools:layout="@layout/category_fragment" />
+    <fragment
+        android:id="@+id/FAQ"
+        android:name="com.add.wordpressdroid.ui.faq.FAQ"
+        android:label="faq_fragment"
+        tools:layout="@layout/faq_fragment" />
+    <fragment
+        android:id="@+id/setting"
+        android:name="com.add.wordpressdroid.ui.settings.Setting"
+        android:label="setting_fragment"
+        tools:layout="@layout/setting_fragment" />
+    <fragment
+        android:id="@+id/consultCategory"
+        android:name="com.add.wordpressdroid.ui.consultCategory.ConsultCategory"
+        android:label="consult_category_fragment"
+        tools:layout="@layout/consult_category_fragment" />
+</navigation>
