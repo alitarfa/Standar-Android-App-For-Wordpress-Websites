@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import com.add.wordpressdroid.R;
 import com.add.wordpressdroid.adapter.CategoryItemsAdapter;
 import com.add.wordpressdroid.adapter.RecentPostAdapter;
+import com.add.wordpressdroid.model.category.Category;
 
 import java.util.Arrays;
 
@@ -55,7 +56,7 @@ public class ConsultCategory extends Fragment implements CategoryItemsAdapter.On
         RecentPostAdapter adapter = new RecentPostAdapter(getContext());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
-        adapter.setPosts(Arrays.asList("","","","","",""));
+        //adapter.setPosts(Arrays.asList("","","","","",""));
 
     }
 
@@ -64,17 +65,13 @@ public class ConsultCategory extends Fragment implements CategoryItemsAdapter.On
      * Setup The Categories List
      */
     public void setupCategoryItems() {
-
         CategoryItemsAdapter categoryItemsAdapter = new CategoryItemsAdapter(getContext(), this);
         recycleCategoryList.setAdapter(categoryItemsAdapter);
         recycleCategoryList.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL,false));
-        // test data
-        categoryItemsAdapter.setCategoriesList(Arrays.asList("Sport","Computer Science","Nature","Design" ,"Facebook"));
-        categoryItemsAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void onSelectCategory() {
+    public void onSelectCategory(Category category) {
 
     }
 }

@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.add.wordpressdroid.R;
+import com.add.wordpressdroid.model.category.Category;
 import com.add.wordpressdroid.ui.home.Home;
 import com.add.wordpressdroid.utils.Utils;
 
@@ -21,10 +22,10 @@ public class CategoryItemsAdapter extends RecyclerView.Adapter<CategoryItemsAdap
 
     // interface navigation action
     public interface OnSelectCategory {
-        public void onSelectCategory();
+        public void onSelectCategory(Category category);
     }
 
-    private List<String> categoriesList;
+    private List<Category> categoriesList;
     private Context context;
     private LayoutInflater inflater;
     private OnSelectCategory selectCategory;
@@ -38,7 +39,7 @@ public class CategoryItemsAdapter extends RecyclerView.Adapter<CategoryItemsAdap
     }
 
     // setup the list of category
-    public void setCategoriesList(List<String> categoriesList) {
+    public void setCategoriesList(List<Category> categoriesList) {
         this.categoriesList= categoriesList;
     }
 
@@ -51,12 +52,12 @@ public class CategoryItemsAdapter extends RecyclerView.Adapter<CategoryItemsAdap
 
     @Override
     public void onBindViewHolder(@NonNull CategoryItemsViewpHolder holder, int position) {
-        holder.nameCategory.setText(categoriesList.get(position));
+        holder.nameCategory.setText(categoriesList.get(position).getName());
         holder.nameCategory.setBackground(Utils.getRandomColor(context));
 
         // handle on Select One Category
         holder.itemCategory.setOnClickListener(v -> {
-            selectCategory.onSelectCategory();
+            selectCategory.onSelectCategory(categoriesList.get(position));
         });
     }
 

@@ -22,6 +22,7 @@ import com.add.wordpressdroid.adapter.CategoryItemsAdapter;
 import com.add.wordpressdroid.adapter.HotPostAdapter;
 import com.add.wordpressdroid.adapter.RecentPostAdapter;
 import com.add.wordpressdroid.databinding.HomeFragmentBinding;
+import com.add.wordpressdroid.model.category.Category;
 import com.add.wordpressdroid.ui.selectedCategory.SelectedCategory;
 
 import java.util.Arrays;
@@ -65,14 +66,20 @@ public class Home extends Fragment implements CategoryItemsAdapter.OnSelectCateg
     }
 
 
+    /**
+     * GUI init
+     */
     public void setupUI() {
         recyclerViewRecentPosts = binding.getRoot().findViewById(R.id.rvPosts);
         RecentPostAdapter adapter = new RecentPostAdapter(getContext());
-        adapter.setPosts(Arrays.asList("","","",""));
+       // adapter.setPosts(Arrays.asList("","","",""));
         recyclerViewRecentPosts.setAdapter(adapter);
         recyclerViewRecentPosts.setLayoutManager(new GridLayoutManager(getContext(),2));
     }
 
+    /**
+     *
+     */
     public void setupTheHotPosts() {
         HotPostAdapter hotPostAdapter = new HotPostAdapter(getContext());
         binding.pagerFeaturedPost.setAdapter(hotPostAdapter);
@@ -87,15 +94,20 @@ public class Home extends Fragment implements CategoryItemsAdapter.OnSelectCateg
         CategoryItemsAdapter categoryItemsAdapter = new CategoryItemsAdapter(getContext(), this);
         binding.recycleCategoryList.setAdapter(categoryItemsAdapter);
         binding.recycleCategoryList.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL,false));
-        // test data
-        categoryItemsAdapter.setCategoriesList(Arrays.asList("Sport","Computer Science","Nature","Design" ,"Facebook"));
-        categoryItemsAdapter.notifyDataSetChanged();
+
+        // get the data from the Repository
+      mViewModel.getCategories().observe(this, result-> {
+          categoryItemsAdapter.setCategoriesList(result);
+          categoryItemsAdapter.notifyDataSetChanged();
+      });
     }
 
     @Override
-    public void onSelectCategory() {
-       // ((MainActivity) Objects.requireNonNull(getActivity())).navigateToCategory();
-        getContext().startActivity(new Intent(getContext(), SelectedCategory.class));
+    public void onSelectCategory(Category category) {
+        Intent intent = new Intent(getContext(), SelectedCategory.class);
+        intent.putExtra("categoryId",category.getID());
+        intent.putExtra("categoryName",category.getName());
+        startActivity(intent);
     }
 
 

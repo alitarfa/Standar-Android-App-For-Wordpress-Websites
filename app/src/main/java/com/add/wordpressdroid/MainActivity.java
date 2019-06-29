@@ -8,6 +8,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
 import com.add.wordpressdroid.adapter.CategoryItemsAdapter;
+import com.add.wordpressdroid.model.category.Category;
 import com.add.wordpressdroid.ui.selectedCategory.SelectedCategory;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -37,17 +38,11 @@ public class MainActivity extends AppCompatActivity implements CategoryItemsAdap
     }
 
 
-    /**
-     * Navigate to Specific Category
-     */
-    public void navigateToCategory() {
-        navController.navigate(R.id.consultCategory);
-    }
-
-
     @Override
-    public void onSelectCategory() {
-        //navigateToCategory();
-        startActivity(new Intent(this, SelectedCategory.class));
+    public void onSelectCategory(Category category) {
+        Intent intent = new Intent(this, SelectedCategory.class);
+        intent.putExtra("categoryId",category.getID());
+        intent.putExtra("categoryName",category.getName());
+        startActivity(intent);
     }
 }

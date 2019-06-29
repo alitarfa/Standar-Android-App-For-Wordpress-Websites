@@ -12,13 +12,14 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.add.wordpressdroid.R;
+import com.add.wordpressdroid.model.posts.post.Post;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RecentPostAdapter  extends RecyclerView.Adapter<RecentPostAdapter.RecentPostViewHolder> {
 
-    private List<String> posts;
+    private List<Post> posts;
     private Context context;
     private LayoutInflater inflater;
 
@@ -29,12 +30,10 @@ public class RecentPostAdapter  extends RecyclerView.Adapter<RecentPostAdapter.R
 
     }
 
-
     // setup the list of category
-    public void setPosts(List<String> posts) {
+    public void setPosts(List<Post> posts) {
         this.posts= posts;
     }
-
 
 
     @NonNull
