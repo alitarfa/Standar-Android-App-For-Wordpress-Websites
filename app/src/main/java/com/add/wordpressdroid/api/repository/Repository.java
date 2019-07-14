@@ -2,11 +2,13 @@ package com.add.wordpressdroid.api.repository;
 
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.add.wordpressdroid.api.http.ApiUtils;
 import com.add.wordpressdroid.model.category.Category;
 import com.add.wordpressdroid.model.posts.post.Post;
+import com.add.wordpressdroid.utils.AppConstant;
 
 import java.util.List;
 
@@ -73,12 +75,57 @@ public class Repository {
     }
 
 
+    /**
+     * Retrieve the Latest Posts from Server
+     */
+    public LiveData<List<Post>> getRecentPosts() {
+        MutableLiveData<List<Post>> data = new MutableLiveData<>();
 
-    public void getRecentPosts() {
+        ApiUtils.getApiInterface().getRecentPosts(AppConstant.DEFAULT_PAGE).enqueue(new Callback<List<Post>>() {
+            @Override
+            public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
+                Log.e("[POSTS RECENT MSG]" ,response.message());
 
+                if (response.isSuccessful()) {
+                    Log.e("[POSTS RECENT]" ,"Received");
+                    data.setValue(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Post>> call, Throwable t) {
+                Log.e("[POST RECENT]" ,"ERROR");
+                Log.e("[POST RECENT E]" ,t.getMessage());
+                Log.e("[POST RECENT E]" , String.valueOf(t.getCause()));
+            }
+        });
+
+        return data;
     }
 
-    public void getTopPosts() {
+    /**
+     * Return the Hot Posts or the Top Posts
+     */
+    public MutableLiveData<List<Post>> getTopPosts() {
+        MutableLiveData<List<Post>> data = new MutableLiveData<>();
 
+        ApiUtils.getApiInterface().getFeaturedPosts(AppConstant.DEFAULT_PAGE).enqueue(new Callback<List<Post>>() {
+            @Override
+            public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
+                if (response.isSuccessful()) {
+                    Log.e("[POSTS TOP]" ,"Received");
+                    data.setValue(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Post>> call, Throwable t) {
+                Log.e("[POST TOP]" ,"ERROR");
+                Log.e("[POST TOP E]" ,t.getMessage());
+                Log.e("[POST TOP E]" , String.valueOf(t.getCause()));
+            }
+        });
+
+        return data;
     }
 }

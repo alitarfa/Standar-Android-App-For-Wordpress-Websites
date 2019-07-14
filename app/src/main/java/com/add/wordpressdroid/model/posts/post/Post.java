@@ -12,7 +12,7 @@ import com.google.gson.annotations.SerializedName;
 public class Post implements Parcelable {
 
     @SerializedName("id")
-    private Double mID;
+    private int mID;
     @SerializedName("title")
     private Title mTitle = new Title();
     @SerializedName("_embedded")
@@ -22,7 +22,7 @@ public class Post implements Parcelable {
 
     private String formattedDate;
 
-    public Double getID() {
+    public int getID() {
         return mID;
     }
 
@@ -57,7 +57,7 @@ public class Post implements Parcelable {
     }
 
     protected Post(Parcel in) {
-        mID = in.readDouble();
+        mID = (int) in.readDouble();
         mTitle = in.readParcelable(Title.class.getClassLoader());
         mEmbedded = in.readParcelable(Embedded.class.getClassLoader());
         mOldDate = in.readString();

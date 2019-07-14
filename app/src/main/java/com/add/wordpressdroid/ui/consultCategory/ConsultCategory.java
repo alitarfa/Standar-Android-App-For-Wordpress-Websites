@@ -56,7 +56,6 @@ public class ConsultCategory extends Fragment implements CategoryItemsAdapter.On
         RecentPostAdapter adapter = new RecentPostAdapter(getContext());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
-        //adapter.setPosts(Arrays.asList("","","","","",""));
 
     }
 

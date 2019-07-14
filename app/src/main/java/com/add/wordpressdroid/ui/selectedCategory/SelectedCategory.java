@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ public class SelectedCategory extends AppCompatActivity {
     private RecyclerView recyclerViewPosts;
     private RecentPostAdapter recentPostAdapter;
     private SelectedCategoryViewModel viewModel;
+    private SwipeRefreshLayout swipe_refresh;
 
 
     @Override
@@ -45,14 +47,17 @@ public class SelectedCategory extends AppCompatActivity {
         getSupportActionBar().setTitle(categoryName);
 
         // setup the GUI
-        setupUI();
+        setupUI(categoryId);
 
         // setup the Data
         setupData(categoryId);
     }
 
-    public void setupUI(){
+    public void setupUI(int categoryId){
         recyclerViewPosts = findViewById(R.id.recycle_recent_post);
+        swipe_refresh = findViewById(R.id.swipe_refresh);
+        swipe_refresh.setRefreshing(true);
+        swipe_refresh.setOnRefreshListener(() -> setupData(categoryId));
         recentPostAdapter = new RecentPostAdapter(this);
         recyclerViewPosts.setAdapter(recentPostAdapter);
         recyclerViewPosts.setLayoutManager(new GridLayoutManager(getBaseContext(),2));
@@ -65,7 +70,6 @@ public class SelectedCategory extends AppCompatActivity {
         return true;
     }
 
-
     /**
      * get the Data from Repository
      * @param id
@@ -74,6 +78,7 @@ public class SelectedCategory extends AppCompatActivity {
         viewModel.getPostsByCategory(id).observe(this, result ->  {
             recentPostAdapter.setPosts(result);
             recentPostAdapter.notifyDataSetChanged();
+            swipe_refresh.setRefreshing(false);
         });
     }
 }

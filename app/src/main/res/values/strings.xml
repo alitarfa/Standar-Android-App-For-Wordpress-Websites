@@ -135,5 +135,7 @@
     <string name="delete_all_fav_item">Do you want to delete all posts from bookmark list?</string>
     <string name="delete_all">Delete All</string>
     <string name="home">home</string>
+    <string name="category">Category</string>
+    <string name="setting">Setting</string>
 
 </resources>

@@ -16,6 +16,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.add.wordpressdroid.R;
 import com.add.wordpressdroid.adapter.CategoryItemsAdapter;
@@ -25,7 +26,6 @@ import com.add.wordpressdroid.databinding.HomeFragmentBinding;
 import com.add.wordpressdroid.model.category.Category;
 import com.add.wordpressdroid.ui.selectedCategory.SelectedCategory;
 
-import java.util.Arrays;
 
 public class Home extends Fragment implements CategoryItemsAdapter.OnSelectCategory {
 
@@ -33,6 +33,8 @@ public class Home extends Fragment implements CategoryItemsAdapter.OnSelectCateg
     private HomeFragmentBinding binding;
     private RecyclerView recyclerViewRecentPosts;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private RecentPostAdapter adapter;
+    private ProgressBar progressBar;
 
 
     public static Home newInstance() {
@@ -63,6 +65,7 @@ public class Home extends Fragment implements CategoryItemsAdapter.OnSelectCateg
 
         // setup Refreshing
         setupRefreshing();
+
     }
 
 
@@ -71,19 +74,32 @@ public class Home extends Fragment implements CategoryItemsAdapter.OnSelectCateg
      */
     public void setupUI() {
         recyclerViewRecentPosts = binding.getRoot().findViewById(R.id.rvPosts);
-        RecentPostAdapter adapter = new RecentPostAdapter(getContext());
-       // adapter.setPosts(Arrays.asList("","","",""));
+        progressBar = getView().findViewById(R.id.pbSectionLoader);
+        adapter = new RecentPostAdapter(getContext());
         recyclerViewRecentPosts.setAdapter(adapter);
         recyclerViewRecentPosts.setLayoutManager(new GridLayoutManager(getContext(),2));
+        setupDataRecentPosts();
+
     }
 
     /**
-     *
+     * Recent Posts Data
+     */
+    public void setupDataRecentPosts() {
+        mViewModel.getRecentPosts().observe(this, res -> {
+            adapter.setPosts(res);
+            adapter.notifyDataSetChanged();
+        });
+    }
+
+    /**
+     *  Setup Data for Top Posts
      */
     public void setupTheHotPosts() {
-        HotPostAdapter hotPostAdapter = new HotPostAdapter(getContext());
-        binding.pagerFeaturedPost.setAdapter(hotPostAdapter);
-
+        mViewModel.getTopPosts().observe(this, result -> {
+            HotPostAdapter hotPostAdapter = new HotPostAdapter(getContext(), result);
+            binding.pagerFeaturedPost.setAdapter(hotPostAdapter);
+        });
     }
 
     /**
@@ -99,6 +115,7 @@ public class Home extends Fragment implements CategoryItemsAdapter.OnSelectCateg
       mViewModel.getCategories().observe(this, result-> {
           categoryItemsAdapter.setCategoriesList(result);
           categoryItemsAdapter.notifyDataSetChanged();
+          hidenProgress();
       });
     }
 
@@ -119,5 +136,10 @@ public class Home extends Fragment implements CategoryItemsAdapter.OnSelectCateg
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
+    }
+
+
+    public void hidenProgress() {
+        progressBar.setVisibility(View.GONE);
     }
 }

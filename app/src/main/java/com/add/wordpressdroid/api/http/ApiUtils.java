@@ -7,10 +7,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
-/**
- * Created by ashiq on 9/6/2017.
- */
-
 public class ApiUtils {
 
     private static Retrofit retrofit = null;

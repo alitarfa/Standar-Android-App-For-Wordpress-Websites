@@ -96,7 +96,6 @@
                 android:layout_marginRight="@dimen/margin_15dp"
                 android:paddingTop="@dimen/margin_4dp"
                 android:paddingBottom="@dimen/margin_4dp"
-                android:text="@string/see_more"
                 android:textColor="@color/blue"
                 android:textSize="14sp" />
 
@@ -154,7 +153,6 @@
                 android:layout_marginRight="@dimen/margin_15dp"
                 android:paddingTop="@dimen/margin_4dp"
                 android:paddingBottom="@dimen/margin_4dp"
-                android:text="@string/see_more"
                 android:textColor="@color/blue"
                 android:textSize="14sp" />
 

@@ -3,8 +3,6 @@ package com.add.wordpressdroid.api.http;
 
 import com.add.wordpressdroid.api.params.HttpParams;
 import com.add.wordpressdroid.model.category.Category;
-import com.add.wordpressdroid.model.menus.MainMenu;
-import com.add.wordpressdroid.model.menus.SubMenu;
 import com.add.wordpressdroid.model.posts.post.CommentsAndReplies;
 import com.add.wordpressdroid.model.posts.post.Post;
 import com.add.wordpressdroid.model.posts.post.PostDetails;
@@ -26,15 +24,11 @@ public interface ApiInterface {
     @GET(HttpParams.API_CATEGORIES)
     Call<List<Category>> getCategories();
 
-  /*  @GET(HttpParams.API_FEATURED_POSTS)
+    @GET(HttpParams.API_FEATURED_POSTS)
     Call<List<Post>> getFeaturedPosts(@Query(HttpParams.API_TEXT_PAGE) int pageCount);
-*/
+
     @GET(HttpParams.API_RECENT_POSTS)
     Call<List<Post>> getRecentPosts(@Query(HttpParams.API_TEXT_PAGE) int pageCount);
-
-   /* @GET(HttpParams.API_CATEGORISED_ALL_POST)
-    Call<List<Post>> getPostsByCategory(@Query(HttpParams.API_TEXT_PAGE) int pageCount, @Query(HttpParams.API_TEXT_CATEGORIES) int categoryId);
-*/
 
    @GET(HttpParams.API_CATEGORISED_ALL_POST)
     Call<List<Post>> getPostsByCategory(@Query(HttpParams.API_TEXT_CATEGORIES) int categoryId);
@@ -42,12 +36,6 @@ public interface ApiInterface {
 
     @GET(HttpParams.API_POST_DETAILS)
     Call<PostDetails> getPostDetails(@Path(HttpParams.API_TEXT_ID) int postId);
-
-    @GET(HttpParams.API_MENUS)
-    Call<List<MainMenu>> getMenus();
-
-    @GET(HttpParams.API_SUB_MENUS)
-    Call<SubMenu> getSubMenus(@Path(HttpParams.API_TEXT_ID) int subMenuID);
 
     @GET
     Call<List<CommentsAndReplies>> getCommentsAndReplies(@Url String url, @Query(HttpParams.API_TEXT_PER_PAGE) int pageCount);

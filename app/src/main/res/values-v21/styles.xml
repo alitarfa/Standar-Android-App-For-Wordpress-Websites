@@ -10,4 +10,9 @@
     <style name="DrawerArrowStyle" parent="@style/Widget.AppCompat.DrawerArrowToggle">
         <item name="color">#000</item>
     </style>
+
+    <!--Difference bellow 21-->
+    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert"/>
+    <!--Difference-->
+
 </resources>

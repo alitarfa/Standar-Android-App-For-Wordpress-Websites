@@ -19,13 +19,7 @@
         android:layout_height="match_parent" />
 
     <View
-        android:background="@drawable/carousel_gradient"
-        android:rotation="180"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <View
-        android:background="@drawable/carousel_gradient"
+        android:background="@drawable/gra_color"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

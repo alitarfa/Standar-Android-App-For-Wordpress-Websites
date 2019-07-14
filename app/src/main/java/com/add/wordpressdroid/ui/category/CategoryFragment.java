@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,11 +25,11 @@ public class CategoryFragment extends Fragment {
     private CategoryViewModel mViewModel;
     private RecyclerView recyclerView;
     private CategoryAdapter categoryAdapter;
+    private SwipeRefreshLayout refreshLayout;
 
     public static CategoryFragment newInstance() {
         return new CategoryFragment();
     }
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -40,17 +41,27 @@ public class CategoryFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(CategoryViewModel.class);
-        // TODO: Use the ViewModel
 
         setupUI();
+        setupData();
     }
 
     public void setupUI()  {
         recyclerView = getView().findViewById(R.id.recycle);
+        refreshLayout = getView().findViewById(R.id.swipe_refresh);
+        refreshLayout.setRefreshing(true);
+        refreshLayout.setOnRefreshListener(this::setupData);
         categoryAdapter = new CategoryAdapter(getContext());
         recyclerView.setAdapter(categoryAdapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
-        categoryAdapter.setPosts(Arrays.asList("","","",""));
+     }
+
+    public void setupData() {
+        mViewModel.getCategories().observe(this, res -> {
+            this.categoryAdapter.setPosts(res);
+            this.categoryAdapter.notifyDataSetChanged();
+            refreshLayout.setRefreshing(false);
+        });
     }
 
 }
